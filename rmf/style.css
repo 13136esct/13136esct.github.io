@@ -1,0 +1,442 @@
+/* ================================================= */
+/* 0. PALETA DE CORES (CONTROLO TOTAL NO TOPO)       */
+/* ================================================= */
+:root {
+    /* ----------------------------------------------------------------------- */
+    /* 1. CORES BASE (ALTERE APENAS ESTES CINCO VALORES HEXADECIMAIS)           */
+    /* ----------------------------------------------------------------------- */
+    --cor1: #F0EBD8;
+    /* Cor de Fundo Mais Clara */
+    --cor2: #e2ddcc;
+    /* Cor de Fundo Secundária */
+    --cor3: #d3cebe;
+    /* Cor de Destaque Suave (Hover) */
+    --cor4: #3E5C76;
+    /* Cor Principal (Texto e Ícones) */
+    --cor5: #0D1321;
+    /* Cor de Contraste Forte (Texto Secundário) */
+
+    /* ----------------------------------------------------------------------- */
+    /* 2. MAPAS SEMÂNTICOS (As regras de design usam APENAS estas variáveis)   */
+    /* Aqui é onde você "liga" a função do elemento a uma cor base.         */
+    /* ----------------------------------------------------------------------- */
+
+    /* CORES DE FUNDO GERAL */
+    --cor-fundo-geral: var(--cor1);
+    --cor-fundo-menu-mobile: var(--cor2);
+    --cor-fundo-cabecalho: var(--cor2);
+
+    /* CORES DE TEXTO E TÍTULOS */
+    --cor-texto-principal: var(--cor4);
+    --cor-texto-cabecalho: var(--cor4);
+    --cor-texto-menu-mobile: var(--cor4);
+
+    /* CORES DE INTERAÇÃO (Bordas, Botões, Hover) */
+    --cor-borda-menu-mobile: var(--cor3);
+    --cor-fundo-botao-inativo-mobile: var(--cor2);
+    --cor-fundo-botao-hover: var(--cor3);
+    --cor-fundo-botao-ativo: var(--cor3);
+
+    /* CORES DE SUBLINKS (CONTRASTE FORTE) */
+    --cor-fundo-sublink: var(--cor2);
+    --cor-texto-sublink: var(--cor4);
+    --cor-hover-sublink: var(--cor3);
+    --cor-texto-hover-sublink: var(--cor4);
+
+    /* Cores estáticas (não precisam de variáveis base) */
+    --cor-borda-cabecalho: #ccc;
+    --cor-sombra-cabecalho: rgba(0, 0, 0, 0.1);
+}
+
+
+/* ================================================= */
+/* 1. ESTILOS GLOBAIS E MOBILE (MOBILE-FIRST)        */
+/* ================================================= */
+
+body {
+    margin: 0;
+    background-color: var(--cor-fundo-geral);
+    font-family: 'Roboto', sans-serif;
+    color: var(--cor-texto-principal);
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+/* --- ÍCONE E ALINHAMENTO --- */
+
+/* Torna o link flexível para alinhar o ícone e o título (lado a lado) */
+.header-logo-link {
+    display: flex;
+    align-items: center;
+    /* Centraliza verticalmente o ícone com o texto */
+    gap: 12px;
+    /* Espaço entre o ícone e o título */
+    text-decoration: none;
+    color: var(--cor-texto-cabecalho);
+}
+
+/* Estiliza o ícone (TAMANHO REVERTIDO: 48px mobile) */
+.site-icon {
+    width: 48px;
+    height: 48px;
+}
+
+/* --- FIM DOS ESTILOS NOVOS --- */
+
+/* --- CABEÇALHO PRINCIPAL (COMPACTADO E COM MENOS ESPAÇO LATERAL) --- */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Padding vertical definido para 5px e lateral para 5px (DO JEITO QUE QUERIA) */
+    padding: 5px 5px;
+    background-color: var(--cor-fundo-cabecalho);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease-in-out;
+    /* Mobile: Força altura mínima para coincidir (48px ícone + 10px padding vertical = 58px) */
+    min-height: 58px;
+}
+
+/* Título do Site */
+.site-title {
+    font-weight: bold;
+    /* TAMANHO REVERTIDO: 1.6em */
+    font-size: 1.6em;
+    color: var(--cor-texto-cabecalho);
+    margin: 0;
+    /* white-space: nowrap; <-- REMOVIDO para permitir quebra de linha */
+}
+
+/* --- MECANISMO MENU CSS-ONLY --- */
+
+.menu-toggle-checkbox {
+    display: none;
+}
+
+/* Ícone Abrir Menu (☰) */
+.menu-toggle-label {
+    background: none;
+    border: none;
+    font-size: 2.2em;
+    line-height: 0.5;
+    cursor: pointer;
+    color: var(--cor-texto-cabecalho);
+    /* CORRIGIDO: Removido padding para que a altura seja controlada pelo .main-header */
+    z-index: 2002;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+/* Ícone Fechar Menu (X) */
+.close-menu {
+    background: none;
+    border: none;
+    font-size: 2.2em;
+    line-height: 0.5;
+    cursor: pointer;
+    /* CORRIGIDO: Removido padding para que a altura seja controlada pelo .mobile-menu-header */
+    z-index: 2002;
+    display: none;
+}
+
+/* Overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    display: none;
+}
+
+/* Estrutura do menu slide-in */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background-color: var(--cor-fundo-menu-mobile);
+    border-left: 1px solid var(--cor-borda-menu-mobile);
+    padding: 0;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 2001;
+    overflow-y: auto;
+}
+
+/* CABEÇALHO DO MENU SLIDE-IN */
+.mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Mobile: Padding sincronizado com o .main-header para igualar a altura */
+    padding: 5px 5px;
+    background-color: var(--cor-fundo-cabecalho);
+    position: sticky;
+    top: 0;
+    z-index: 2003;
+    color: var(--cor-texto-cabecalho);
+    /* Mobile: Força altura mínima para coincidir (48px ícone + 10px padding vertical = 58px) */
+    min-height: 58px;
+}
+
+.mobile-menu-header .site-title,
+.mobile-menu-header .close-menu {
+    color: var(--cor-texto-cabecalho);
+    align-self: center;
+}
+
+.slide-nav-links {
+    padding: 0;
+}
+
+/* Estilo BASE dos links */
+.slide-nav-links a {
+    display: block;
+    padding: 12px 20px;
+    color: var(--cor-texto-cabecalho);
+    margin-bottom: 0;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    background-color: var(--cor-fundo-botao-inativo-mobile);
+    border-radius: 0;
+    text-align: left;
+    border-bottom: none;
+    border-top: 1px solid var(--cor1);
+}
+
+/* Divisória ABAIXO do último link */
+.slide-nav-links a:last-child {
+    border-bottom: 1px solid var(--cor1);
+}
+
+/* ESTADOS HOVER E ACTIVE */
+.slide-nav-links a:hover,
+.slide-nav-links a:focus {
+    background-color: var(--cor-fundo-botao-hover);
+    color: var(--cor-texto-cabecalho);
+    outline: none;
+}
+
+.slide-nav-links a.active {
+    font-weight: bold;
+    color: var(--cor-texto-cabecalho);
+    background-color: var(--cor-fundo-botao-ativo);
+}
+
+
+/* ================================================= */
+/* 2. ESTILOS PARA DROPDOWN NO MENU MOBILE           */
+/* ================================================= */
+
+.dropdown-item {
+    position: relative;
+    display: block;
+}
+
+.dropdown-toggle {
+    display: none;
+}
+
+/* Botão principal do dropdown (LABEL) */
+.dropdown-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px 20px;
+    color: var(--cor-texto-cabecalho);
+    background-color: var(--cor-fundo-botao-inativo-mobile);
+    font-size: 1.1em;
+    text-transform: uppercase;
+    border-top: 1px solid var(--cor1);
+}
+
+.dropdown-label:hover {
+    background-color: var(--cor-fundo-botao-hover);
+}
+
+.dropdown-label.active {
+    font-weight: bold;
+    background-color: var(--cor-fundo-botao-ativo);
+    color: var(--cor-texto-cabecalho);
+}
+
+/* Seta do dropdown */
+.dropdown-icon {
+    font-size: 0.8em;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Área que contém os sub-links */
+.dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    border-top: none;
+}
+
+/* CHAVE DO DROPDOWN CSS-ONLY */
+.dropdown-toggle:checked+.dropdown-label .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.dropdown-toggle:checked~.dropdown-content {
+    max-height: 300px;
+}
+
+/* Estilos dos Sub-links */
+.dropdown-content .sub-link {
+    display: block;
+    padding: 10px 30px;
+    font-size: 1em;
+    /* AGORA USANDO AS NOVAS VARIÁVEIS SEMÂNTICAS */
+    background-color: var(--cor-fundo-sublink);
+    color: var(--cor-texto-sublink);
+    text-transform: none;
+    border-top: 1px solid var(--cor2);
+}
+
+.dropdown-content .sub-link:hover {
+    background-color: var(--cor-hover-sublink);
+    color: var(--cor-texto-hover-sublink);
+}
+
+.dropdown-content .sub-link:last-child {
+    border-bottom: 1px solid var(--cor1);
+}
+
+.dropdown-content .sub-link.active {
+    font-weight: bold;
+    background-color: var(--cor-hover-sublink);
+    color: var(--cor-texto-hover-sublink);
+}
+
+/* --- CORREÇÕES --- */
+.slide-nav-links .dropdown-item .dropdown-label {
+    border-bottom: none;
+}
+
+.slide-nav-links a {
+    border-top: 1px solid var(--cor1);
+}
+
+.slide-nav-links a:last-child {
+    border-bottom: 1px solid var(--cor1);
+}
+
+
+/* --- CHAVE DO MECANISMO CSS (Abertura/Fecho) --- */
+
+.menu-toggle-checkbox:checked {
+    position: fixed;
+}
+
+.menu-toggle-checkbox:checked~.mobile-menu {
+    transform: translateX(0);
+}
+
+.menu-toggle-checkbox:checked~.menu-overlay {
+    display: block;
+}
+
+.menu-toggle-checkbox:checked~.main-header,
+.menu-toggle-checkbox:checked~.content-area {
+    transform: translateX(0);
+}
+
+.menu-toggle-checkbox:checked~.main-header .menu-toggle-label {
+    visibility: hidden;
+    display: flex;
+}
+
+.menu-toggle-checkbox:checked~.mobile-menu .menu-close-area .close-menu {
+    display: block;
+    color: var(--cor-texto-cabecalho);
+}
+
+
+/* --- Estilos para o Conteúdo Principal --- */
+.content-area {
+    padding: 10px 30px;
+    max-width: none;
+    margin: 0 auto;
+    color: var(--cor-texto-principal);
+    transition: transform 0.3s ease-in-out;
+}
+
+.page-content {
+    background-color: var(--cor-fundo-geral);
+    padding: 0;
+    border: none;
+}
+
+h1,
+.content-area p {
+    color: var(--cor-texto-principal);
+}
+
+
+/* ================================================= */
+/* 3. MEDIA QUERY (UNIFICAR MOBILE E DESKTOP)        */
+/* ================================================= */
+
+@media (min-width: 768px) {
+
+    /* TAMANHO REVERTIDO: 60px desktop */
+    .site-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    /* Aumenta o espaçamento do gap no desktop */
+    .header-logo-link {
+        gap: 20px;
+    }
+
+    .menu-toggle-label {
+        display: flex;
+        visibility: visible;
+    }
+
+    .menu-overlay {
+        display: none !important;
+    }
+
+    .main-header,
+    .content-area {
+        transform: translateX(0);
+    }
+
+    /* CABEÇALHO PRINCIPAL (Desktop) */
+    .main-header {
+        justify-content: space-between;
+        max-width: none;
+        margin: 0;
+        /* Reduzido o padding vertical para 4px para encolher o cabeçalho */
+        padding: 4px 8px;
+        /* Desktop: Nova altura de 68px (60px ícone + 8px padding) */
+        min-height: 68px;
+    }
+
+    /* CABEÇALHO DO MENU SLIDE-IN (Desktop) */
+    .mobile-menu-header {
+        /* Sincronizado para manter a coincidência de altura de 68px */
+        padding: 4px 8px;
+        min-height: 68px;
+    }
+}
