@@ -578,7 +578,7 @@ ol li ol>li::before {
 ul {
     list-style-type: disc;
     /* Usa os pontos padrão */
-    padding-left: 0;
+    padding-left: 30px;
     margin: 0.5em 0;
 }
 
@@ -897,4 +897,5 @@ ul li {
 /* ================================================= */
 /* 9. EXCEÇÃO: LAYOUT LARGO PARA PÁGINA INICIAL      */
 /* (Esta secção agora está vazia, pois o código foi para o Media Query 3) */
+
 /* ================================================= */
