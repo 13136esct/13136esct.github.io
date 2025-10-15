@@ -1,0 +1,900 @@
+/* ================================================= */
+/* 0. PALETA DE CORES (CONTROLO TOTAL NO TOPO)       */
+/* ================================================= */
+:root {
+    /* ----------------------------------------------------------------------- */
+    /* 1. CORES BASE (ALTERE APENAS ESTES CINCO VALORES HEXADECIMAIS)           */
+    /* ----------------------------------------------------------------------- */
+    --cor2: #efefef;
+    /* Cor de Fundo Mais Clara (Ex: Fundo Geral) */
+    --cor3: #dadada;
+    /* Cor de Fundo Secundária (Ex: Fundo de Cartões, Menu) */
+    --cor1: #ffffff;
+    /* Cor de Destaque Suave (Ex: Hover, Borda Suave) */
+    --cor4: #15999d;
+    /* Cor Principal (Ex: Texto Principal, Linhas de Destaque) */
+    --cor5: #191919;
+    /* Cor de Contraste Forte (Ex: Texto Secundário) */
+
+
+    /* Cores estáticas (valores fixos para elementos específicos) */
+    --cor-borda-cabecalho: #ccc;
+    --cor-sombra-cabecalho: rgba(0, 0, 0, 0.1);
+}
+
+p,
+ul,
+ol,
+li {
+    color: var(--cor5);
+}
+
+a:link,
+a:visited {
+    color: var(--cor5);
+}
+
+/* ================================================= */
+/* 1. ESTILOS GLOBAIS E MOBILE (MOBILE-FIRST)        */
+/* ================================================= */
+
+body {
+    margin: 0;
+    background-color: var(--cor1);
+    font-family: 'Roboto', sans-serif;
+    color: var(--cor5);
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+/* --- ÍCONE E ALINHAMENTO --- */
+
+.header-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--cor5);
+}
+
+.site-icon {
+    width: 48px;
+    height: 48px;
+}
+
+/* --- CABEÇALHO PRINCIPAL --- */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 5px;
+    background-color: var(--cor2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease-in-out;
+    min-height: 58px;
+}
+
+/* Título do Site */
+.site-title {
+    font-weight: bold;
+    font-size: 1.6em;
+    color: var(--cor5);
+    margin: 0;
+}
+
+/* --- MECANISMO MENU CSS-ONLY --- */
+
+.menu-toggle-checkbox {
+    display: none;
+    /* O checkbox real fica escondido, a label é clicável */
+}
+
+.menu-toggle-label {
+    background: none;
+    border: none;
+    font-size: 2.2em;
+    line-height: 0.5;
+    cursor: pointer;
+    color: var(--cor5);
+    z-index: 2002;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.close-menu {
+    background: none;
+    border: none;
+    font-size: 2.2em;
+    line-height: 0.5;
+    cursor: pointer;
+    z-index: 2002;
+    display: none;
+    /* Ícone de fechar escondido por padrão */
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    display: none;
+    /* Overlay (sombra) escondida por padrão */
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background-color: var(--cor2);
+    border-left: 1px solid var(--cor3);
+    padding: 0;
+    transform: translateX(100%);
+    /* Esconde o menu para a direita */
+    transition: transform 0.3s ease-in-out;
+    z-index: 2001;
+    overflow-y: auto;
+}
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 5px;
+    background-color: var(--cor2);
+    position: sticky;
+    top: 0;
+    z-index: 2003;
+    color: var(--cor5);
+    min-height: 58px;
+}
+
+/* Alinha o título "Menu" com os links de navegação */
+.mobile-menu-header .site-title {
+    padding-left: 15px;
+}
+
+.slide-nav-links {
+    padding: 0;
+}
+
+.slide-nav-links a {
+    display: block;
+    padding: 12px 20px;
+    color: var(--cor5);
+    margin-bottom: 0;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    background-color: var(--cor2);
+    border-radius: 0;
+    text-align: left;
+    border-bottom: none;
+    border-top: 1px solid var(--cor1);
+    /* Linha divisória superior */
+}
+
+.slide-nav-links a:last-child {
+    border-bottom: 1px solid var(--cor1);
+    /* Linha divisória inferior no último link */
+}
+
+.slide-nav-links a:hover,
+.slide-nav-links a:focus {
+    background-color: var(--cor3);
+    color: var(--cor5);
+    outline: none;
+}
+
+/* Cor para links ativos */
+.slide-nav-links a.active {
+    background-color: var(--cor3);
+    color: var(--cor5);
+}
+
+
+/* ================================================= */
+/* 2. ESTILOS PARA DROPDOWN NO MENU MOBILE           */
+/* ================================================= */
+
+.dropdown-item {
+    position: relative;
+    display: block;
+}
+
+.dropdown-toggle {
+    display: none;
+    /* Checkbox do dropdown escondido */
+}
+
+.dropdown-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px 20px;
+    color: var(--cor5);
+    background-color: var(--cor2);
+    font-size: 1.1em;
+    text-transform: uppercase;
+    border-top: 1px solid var(--cor1);
+}
+
+.dropdown-label:hover {
+    background-color: var(--cor3);
+}
+
+/* Cor de fundo para o rótulo PARENTE se um sub-link ou o próprio rótulo estiver ativo */
+.dropdown-label.active-parent,
+.dropdown-label.active {
+    background-color: var(--cor3);
+}
+
+/* ------------------------------------------------------------------------------------------ */
+
+
+.dropdown-icon {
+    font-size: 0.8em;
+    transition: transform 0.3s ease-in-out;
+}
+
+.dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    border-top: none;
+}
+
+/* Rotação do ícone ao abrir o dropdown */
+.dropdown-toggle:checked+.dropdown-label .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+/* Expansão do conteúdo do dropdown ao ser marcado */
+.dropdown-toggle:checked~.dropdown-content {
+    max-height: 300px;
+}
+
+.dropdown-content .sub-link {
+    display: block;
+    padding: 10px 30px;
+    font-size: 1em;
+    background-color: var(--cor2);
+    color: var(--cor5);
+    text-transform: none;
+    border-top: 1px solid var(--cor2);
+    /* Linha divisória suave */
+}
+
+.dropdown-content .sub-link.active,
+.dropdown-content .sub-link:hover {
+    background-color: var(--cor3);
+    color: var(--cor5);
+}
+
+.slide-nav-links .dropdown-item .dropdown-label {
+    border-bottom: none;
+}
+
+
+/* --- CHAVE DO MECANISMO CSS (Abertura/Fecho do menu lateral) --- */
+
+.menu-toggle-checkbox:checked~.mobile-menu {
+    transform: translateX(0);
+    /* Move o menu para a vista */
+}
+
+.menu-toggle-checkbox:checked~.menu-overlay {
+    display: block;
+    /* Mostra a sombra (overlay) */
+}
+
+.menu-toggle-checkbox:checked~.main-header .menu-toggle-label {
+    visibility: hidden;
+    /* Esconde o ícone de abrir na barra de cabeçalho quando o menu está aberto */
+    display: flex;
+}
+
+.menu-toggle-checkbox:checked~.mobile-menu .menu-close-area .close-menu {
+    display: block;
+    /* Mostra o ícone de fechar dentro do menu */
+    color: var(--cor5);
+}
+
+
+/* --- Estilos para o Conteúdo Principal --- */
+.content-area {
+    /* Estilos base para mobile/padrão */
+    padding: 10px 30px;
+    max-width: none;
+    margin: 0 auto;
+    color: var(--cor4);
+    transition: transform 0.3s ease-in-out;
+}
+
+
+/* ================================================= */
+/* 3. MEDIA QUERY (ESTILOS DE DESKTOP)              */
+/* ================================================= */
+
+@media (min-width: 768px) {
+
+    .site-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .header-logo-link {
+        gap: 20px;
+    }
+
+    .menu-toggle-label {
+        display: flex;
+        visibility: visible;
+    }
+
+    .menu-overlay {
+        display: none !important;
+        /* Esconde o overlay no desktop */
+    }
+
+    .main-header {
+        justify-content: space-between;
+        max-width: none;
+        margin: 0;
+        padding: 4px 8px;
+        min-height: 68px;
+        /* Aumenta a altura no desktop */
+    }
+
+    .mobile-menu-header {
+        padding: 4px 8px;
+        min-height: 68px;
+    }
+
+    /* ESTILO PADRÃO PARA PÁGINAS INTERNAS (Com Limite de Largura) */
+    .content-area {
+        max-width: 1200px;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin: 0 auto;
+    }
+
+    /* ---- EXCEÇÃO DE LARGURA TOTAL APENAS PARA A HOMEPAGE ---- */
+    /* Estas regras sobrepõem o estilo padrão ACIMA (max-width: 1200px) */
+    .page-home .content-area,
+    .page-home .page-content {
+        /* Remove o limite e centragem, forçando o full-width */
+        max-width: none !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Aplica o padding no grid, que agora tem 100% da largura, para evitar que os cartões colem nas laterais do ecrã */
+    .page-home .tema-card-grid {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+}
+
+/* ================================================= */
+/* 4. ESTILOS PARA CAIXAS LADO A LADO (tema-card-grid) */
+/* ================================================= */
+
+/* Contêiner Grid (Mobile-First: 1 coluna) */
+.tema-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+/* Estilo para cada caixa de informação (card) */
+.tema-card {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--cor2);
+    border: 1px solid var(--cor3);
+    border-radius: 8px;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.tema-card:hover {
+    background-color: var(--cor3);
+    transform: translateY(-5px);
+    /* Efeito de elevação */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tema-card .card-title {
+    color: var(--cor4);
+    margin-top: 0;
+    font-size: 1.5em;
+    border-bottom: 2px solid var(--cor4);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.tema-card .card-description {
+    color: var(--cor5);
+    font-size: 1em;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+
+/* --- Media Query para Desktop (a partir de 768px) --- */
+@media (min-width: 768px) {
+
+    /* Regra para a grelha padrão (Homepage, 3 colunas) */
+    .tema-card-grid {
+        /* Grelha de 3 colunas no desktop */
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    /* Regra para grelhas com a classe .two-col-grid (Diagnóstico), ocupando a largura total (lado a lado) */
+    .tema-card-grid.two-col-grid {
+        /* Usa 2 colunas flexíveis (1fr), forçando-as a ocupar toda a largura */
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: unset;
+        /* Garante que não há centramento */
+    }
+
+    /* Limita a altura dos cartões para manter a linha uniforme */
+    .bloco-ilustracao,
+    .bloco-sobre-combinado {
+        max-height: 320px;
+    }
+
+    /* LAYOUT DA SEGUNDA LINHA */
+    /* O painel de ilustração ocupa 1 coluna */
+    .bloco-ilustracao {
+        grid-column: span 1;
+    }
+
+    /* O painel combinado "Sobre" ocupa 2 colunas */
+    .bloco-sobre-combinado {
+        grid-column: span 2;
+        overflow: hidden;
+        /* Garante que o conteúdo que excede a altura máxima é escondido */
+    }
+}
+
+
+/* ================================================= */
+/* 5. ESTILOS PARA OS BLOCOS DA SEGUNDA LINHA (Imagem)  */
+/* ================================================= */
+
+/* Bloco da Ilustração */
+.bloco-ilustracao {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    /* Remove padding para a imagem preencher */
+    overflow: hidden;
+}
+
+/* Imagem */
+.ilustracao-imagem {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Garante que a imagem preenche o contêiner, cortando se necessário */
+    display: block;
+}
+
+/* ================================================= */
+/* Estilos Padrão para Listas Ordenadas (OL) no Corpo do Documento */
+/* ================================================= */
+
+/* 1. Estilos para o container principal da OL */
+ol {
+    counter-reset: item;
+    /* Inicializa o contador de nível superior */
+    list-style-type: none;
+    /* Remove a numeração padrão */
+    padding-left: 0;
+}
+
+/* 2. Estilos para os itens de lista de nível superior (1., 2., 3., etc.) */
+ol>li {
+    counter-increment: item;
+    /* Incrementa o contador principal */
+    margin-bottom: 1em;
+    padding-left: 2.5em;
+    /* Espaço para o número gerado */
+    position: relative;
+    /* Base para o posicionamento absoluto do número */
+}
+
+/* 3. Gera o número do item de nível superior (1., 2., 3., etc.) */
+ol>li::before {
+    content: counter(item) ". ";
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2em;
+    text-align: right;
+}
+
+/* 4. Estilos para a lista ordenada aninhada (sub-itens 3.1., 3.2., etc.) */
+ol li ol {
+    list-style-type: none;
+    counter-reset: sub-item;
+    /* Inicializa o sub-contador */
+    padding-left: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+ol li ol>li {
+    counter-increment: sub-item;
+    /* Incrementa o sub-contador */
+    margin-bottom: 0.5em;
+    padding-left: 3em;
+    /* Espaço para o número composto (ex: 3.1.) */
+    position: relative;
+}
+
+/* 5. Gera o número do sub-item (3.1., 3.2., etc.) */
+ol li ol>li::before {
+    content: counter(item) "." counter(sub-item) ". ";
+    /* Combina contadores */
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2.5em;
+    text-align: right;
+}
+
+
+/* ================================================= */
+/* NOVO BLOCO: ESTILOS PARA LISTAS NÃO ORDENADAS (UL) - CONSISTÊNCIA */
+/* ================================================= */
+
+/* Contêiner da lista não ordenada (UL) */
+ul {
+    list-style-type: disc;
+    /* Usa os pontos padrão */
+    padding-left: 0;
+    margin: 0.5em 0;
+}
+
+/* Item de lista (LI) */
+ul li {
+    padding-left: 0;
+    position: initial;
+    margin-bottom: 0.5em;
+}
+
+/* Regra de Alinhamento para UL's dentro do contêiner de diagnóstico */
+.diagnosis-column ul {
+    padding-left: 30px;
+    /* Adiciona padding para o marcador ficar visível e alinhado */
+    padding-right: 15px;
+    list-style-position: outside;
+}
+
+
+/* ================================================= */
+/* 6. NOVOS ESTILOS PARA LAYOUT DE 2 COLUNAS (DIAGNÓSTICO) */
+/* (AGORA EMPILHADO EM MOBILE E DESKTOP) */
+/* ================================================= */
+
+/* Contêiner principal para as colunas */
+.diagnosis-grid {
+    display: flex;
+    flex-direction: column;
+    /* Força o empilhamento vertical (1 coluna) */
+    gap: 30px;
+    padding: 10px 0;
+}
+
+/* Coluna individual - Estilo base */
+.diagnosis-column {
+    margin: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 0;
+    padding-right: 0;
+    background-color: var(--cor2);
+    border-radius: 8px;
+    border: 1px solid var(--cor3);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    /* Garante que padding e border não aumentam o tamanho final */
+    width: 100%;
+    max-width: none;
+}
+
+/* CORREÇÃO APLICADA: Padding lateral para o conteúdo (p, ul, ol) diretamente dentro da coluna, no modo mobile. */
+.diagnosis-column>p,
+.diagnosis-column>ul,
+.diagnosis-column>ol {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* FIM DA CORREÇÃO */
+
+
+/* Centralizar o H2 (Homens/Mulheres) */
+.diagnosis-column h2 {
+    display: block;
+    text-align: left;
+    margin-top: 0;
+    padding-left: 15px;
+    /* Padding para o título H2 */
+    padding-right: 15px;
+    padding-bottom: 0;
+    border-bottom: none;
+    margin-bottom: 0.25em;
+    position: relative;
+}
+
+/* Pseudoelemento para criar a linha de destaque abaixo do H2 */
+.diagnosis-column h2::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background-color: var(--cor4);
+    width: 100%;
+    /* Largura total da linha dentro do padding do H2 */
+    margin-top: 5px;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+}
+
+
+/* ------------------------------------------------------------------------------------------ */
+/* Media Query para Desktop (a partir de 768px): Manter o empilhamento (colunas completas) */
+/* ------------------------------------------------------------------------------------------ */
+@media (min-width: 768px) {
+
+    .diagnosis-grid {
+        gap: 50px;
+        padding: 20px 0;
+        align-items: flex-start;
+    }
+
+    .diagnosis-column {
+        width: 100%;
+        /* Garante que ocupa a largura total do container */
+        height: auto;
+        padding-top: 15px;
+    }
+
+    /* Padding para o conteúdo ESTÁTICO (P e OL) dentro da coluna */
+    .diagnosis-column>p,
+    .diagnosis-column>ol,
+    .diagnosis-column>p,
+    .diagnosis-column>ol {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* Reset de padding para os LI's para não acumularem padding duplo */
+    .diagnosis-column>ol>li,
+    .diagnosis-column>ul>li {
+        padding-left: initial;
+        padding-right: initial;
+    }
+
+    /* Ajuste para h4 dentro dos colapsáveis */
+    .diagnosis-column h4 {
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-top: 1em;
+    }
+}
+
+
+/* ================================================= */
+/* 7. ESTILOS PARA CONTEÚDO COLAPSÁVEL (ACORDEÃO) - ESTILO LISTA C/ COR 2 UNIFORME E LINHA COR 1 */
+/* ================================================= */
+
+.collapsible-section {
+    margin-bottom: 0;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+.collapsible-toggle {
+    display: none;
+    /* Checkbox que controla o acordeão escondido */
+}
+
+/* O cabeçalho (LABEL) é o botão clicável */
+.collapsible-header {
+    display: block;
+    cursor: pointer;
+    padding: 10px 0;
+    background-color: var(--cor2);
+    border-radius: 0;
+    /* Linha divisória superior */
+    transition: background-color 0.2s;
+}
+
+/* Remove a linha superior do PRIMEIRO item para evitar linha dupla no topo */
+.diagnosis-column .collapsible-section:first-of-type .collapsible-header {
+    border-top: none;
+}
+
+.collapsible-header:hover {
+    background-color: var(--cor3);
+}
+
+/* Estiliza o H3 dentro do Label */
+.collapsible-header h3 {
+    margin: 0;
+    font-size: 1.3em;
+    color: var(--cor5);
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    /* Adiciona o padding horizontal */
+}
+
+/* Ícone de seta para indicar a expansão */
+.collapsible-header h3::after {
+    content: '▼';
+    font-size: 0.7em;
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+    color: var(--cor5);
+}
+
+/* Conteúdo escondido por padrão */
+.collapsible-content {
+    max-height: 0;
+    /* Esconde o conteúdo com transição suave */
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    background-color: var(--cor2);
+    padding: 0 15px;
+    /* Adiciona o padding horizontal */
+    border: none;
+    border-radius: 0;
+}
+
+/* Estilo do cabeçalho quando o conteúdo está aberto */
+.collapsible-toggle:checked+.collapsible-header {
+    background-color: var(--cor2);
+    border-radius: 0;
+    border-bottom: none;
+}
+
+.collapsible-toggle:checked+.collapsible-header h3 {
+    color: var(--cor5);
+}
+
+/* Muda a seta para indicar que está aberto */
+.collapsible-toggle:checked+.collapsible-header h3::after {
+    content: '▲';
+    color: var(--cor5);
+}
+
+/* Mostra o conteúdo ao marcar o checkbox */
+.collapsible-toggle:checked~.collapsible-content {
+    max-height: 7000px;
+    /* Valor grande para simular altura automática */
+    padding: 10px 15px;
+    padding-top: 5px;
+    border: none;
+}
+
+/* Reset de margem para o primeiro parágrafo/h4 dentro do conteúdo aberto */
+.collapsible-content h4 {
+    margin-top: 1em;
+}
+
+.collapsible-content p:first-of-type,
+.collapsible-content h4:first-of-type {
+    margin-top: 0;
+}
+
+/* ================================================= */
+/* 8. ESTILOS PARA TABELAS (NOVO BLOCO)              */
+/* ================================================= */
+
+/* Contêiner Geral da Tabela */
+.page-content table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+    /* Remove o espaço entre as bordas das células */
+    text-align: left;
+    font-size: 1em;
+    /* Centraliza a tabela se for menor que 100% da largura, mas neste caso é 100% */
+}
+
+/* Cabeçalho (TH) */
+.page-content th {
+    background-color: var(--cor4);
+    /* Cor principal para o fundo do cabeçalho */
+    color: var(--cor1);
+    /* Cor de contraste claro para o texto do cabeçalho */
+    padding: 12px 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--cor4);
+    /* Borda da cor principal */
+}
+
+/* Células de Dados (TD) */
+.page-content td {
+    padding: 10px 15px;
+    border: 1px solid var(--cor3);
+    /* Borda suave */
+    color: var(--cor5);
+    /* Cor de contraste forte para o texto */
+    /* Garante que o texto nas células não é cortado em mobile */
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+/* Estilo para Linhas Alternadas (Melhora a leitura) */
+.page-content tr:nth-child(even) {
+    background-color: var(--cor2);
+    /* Cor de fundo secundária para linhas pares */
+}
+
+.page-content tr:nth-child(odd) {
+    background-color: var(--cor1);
+    /* Cor de fundo geral para linhas ímpares */
+}
+
+/* Efeito Hover na Linha */
+.page-content tr:hover {
+    background-color: var(--cor3);
+    /* Cor de destaque suave ao passar o rato */
+}
+
+/* ---------------------------------------------------- */
+/* Responsividade (Empilha em Mobile se a tabela for grande) */
+/* ---------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    /* Diminui o padding e a fonte para ecrãs muito pequenos */
+    .page-content th,
+    .page-content td {
+        padding: 8px 10px;
+        font-size: 0.9em;
+    }
+}
+
+
+/* ================================================= */
+/* 9. EXCEÇÃO: LAYOUT LARGO PARA PÁGINA INICIAL      */
+/* (Esta secção agora está vazia, pois o código foi para o Media Query 3) */
+/* ================================================= */
