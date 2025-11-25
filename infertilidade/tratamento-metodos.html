@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tratamento - Métodos de Tratamento</title>
+
+    <link rel="icon" type="image/webp" href="imgs/icon.webp">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <input type="checkbox" id="menu-toggle-checkbox" class="menu-toggle-checkbox" hidden>
+
+    <label for="menu-toggle-checkbox" class="menu-overlay" aria-label="Fechar Menu"></label>
+
+    <header class="main-header">
+
+        <div class="header-title">
+            <a href="index.html" class="header-logo-link">
+                <img src="imgs/icon.webp" alt="Ícone do Site" class="site-icon">
+                <span class="site-title">Infertilidade: Uma Abordagem Descomplicada</span>
+            </a>
+        </div>
+
+        <div class="header-links">
+
+            <label for="menu-toggle-checkbox" class="menu-toggle-label" aria-label="Abrir Menu">
+                &#9776;
+            </label>
+        </div>
+
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu">
+
+        <label for="menu-toggle-checkbox" class="menu-close-area" aria-label="Fechar Menu">
+            <div class="mobile-menu-header">
+                <div class="header-title">
+                    <span class="site-title">Menu</span>
+                </div>
+
+                <span class="close-menu">
+                    X
+                </span>
+            </div>
+        </label>
+
+        <nav class="slide-nav-links">
+            <a href="introducao.html">INTRODUÇÃO</a>
+            <a href="prevencao.html">Prevenção</a>
+            <div class="dropdown-item">
+                <input type="checkbox" id="diagnostico-toggle" class="dropdown-toggle" hidden>
+
+                <label for="diagnostico-toggle" class="dropdown-label">
+                    DIAGNÓSTICO
+                    <span class="dropdown-icon">&#9660;</span> </label>
+
+                <div class="dropdown-content">
+                    <a href="diagnostico.html" class="sub-link">Diagnóstico</a>
+                    <a href="diagnostico-metodos.html" class="sub-link">Métodos de diagnóstico</a>
+                    <a href="diagnostico-causas.html" class="sub-link">Causas de infertilidade</a>
+                </div>
+            </div>
+            <div class="dropdown-item">
+                <input type="checkbox" id="tratamento-toggle" class="dropdown-toggle" hidden>
+
+                <label for="tratamento-toggle" class="dropdown-label active">
+                    Tratamento
+                    <span class="dropdown-icon">&#9660;</span> </label>
+
+                <div class="dropdown-content">
+                    <a href="tratamento.html" class="sub-link">Tratamento</a>
+                    <a href="tratamento-metodos.html" class="sub-link active">Métodos de tratamento</a>
+                    <a href="tratamento-gravidez.html" class="sub-link">Gravidez após a Infertilidade</a>
+                </div>
+            </div>
+            <div class="dropdown-item">
+                <input type="checkbox" id="bioetica-toggle" class="dropdown-toggle" hidden>
+
+                <label for="bioetica-toggle" class="dropdown-label">
+                    Bioética
+                    <span class="dropdown-icon">&#9660;</span> </label>
+
+                <div class="dropdown-content">
+                    <a href="bioetica.html" class="sub-link">Bioética</a>
+                    <a href="bioetica-pertenca.html" class="sub-link">Pertença de Gâmetas e Embriões Armazenados</a>
+                    <a href="bioetica-gestacao.html" class="sub-link">Gestação de Substituição</a>
+                </div>
+            </div>
+            <a href="sobre.html">SOBRE</a>
+        </nav>
+    </div>
+
+    <main class="content-area">
+        <div class="page-content">
+            <h1>Métodos de Tratamento</h1>
+
+            <div class="diagnosis-grid">
+
+                <section class="diagnosis-column">
+                    <h2>Fertilização in vitro (FIV)</h2>
+
+                    <div class="collapsible-section">
+                        <p>Caracteriza-se pela união de um oócito com um espermatozoide em laboratório de forma a
+                            possuir embriões que possam ser transferidos para o útero. A sua percentagem de sucesso
+                            ronda os 25% e os 30%.</p>
+                        <input type="checkbox" id="FIV-estimulacao-toggle" class="collapsible-toggle" hidden>
+                        <label for="FIV-estimulacao-toggle" class="collapsible-header">
+                            <h3>Estimulação dos ovários</h3>
+                        </label>
+                        <div class="collapsible-content">
+                            <p>De forma a coletar vários oócitos é feita a estimulação dos ovários através de
+                                gonadotrofinas injetáveis que estimulam o amadurecimento dos folículos, durando entre 10
+                                a 12 dias. A estimulação é acompanhada pelo especialista, que controla o desenvolvimento
+                                do ciclo com ecografias até o tamanho dos folículos ser adequado.<\p>
+                        </div>
+
+                        <input type="checkbox" id="FIV-recolha-toggle" class="collapsible-toggle" hidden>
+                        <label for="FIV-recolha-toggle" class="collapsible-header">
+                            <h3>Revolha dos oócitos</h3>
+                        </label>
+                        <div class="collapsible-content">
+                            <p>A recolha é realizada com o auxílio de uma ecografia vaginal, que dura cerca de 15 a 20
+                                minutos sobre sedação. Quando os oócitos estão maduros e atingem o momento ideal dá-se
+                                este processo de recolha.<\p>
+                        </div>
+
+                        <input type="checkbox" id="FIV-fertilizacao-toggle" class="collapsible-toggle" hidden>
+                        <label for="FIV-fertilizacao-toggle" class="collapsible-header">
+                            <h3>Fertilização dos oócitos</h3>
+                        </label>
+                        <div class="collapsible-content">
+                            <p>Nesta etapa, os óvulos maduros recolhidos em laboratório juntamente com os
+                                espermatozoides previamente preparados, são colocados numa placa de cultura e incubados,
+                                onde ocorre o processo da fecundação, em ambiente controlado.</p>
+                            <p>Em alternativa pode ser usada a técnica de ICSI (Injeção Intracitoplasmática de
+                                Espermatozoides), onde um único espermatozoide é diretamente injetado no interior de
+                                cada oócito para garantir a fertilização.</p>
+                        </div>
+
+                        <div class="collapsible-section">
+                            <input type="checkbox" id="FIV-crescimento-toggle" class="collapsible-toggle" hidden>
+                            <label for="FIV-crescimento-toggle" class="collapsible-header">
+                                <h3>Crescimento dos embriões em laboratório</h3>
+                            </label>
+                            <div class="collapsible-content">
+                                <p>Após a fecundação, os embriões resultantes da fertilização in vitro são monitorados e
+                                    deixados em desenvolvimento durante dois a cinco dias sendo, depois, classificados
+                                    de acordo com a sua capacidade de divisão e morfologia. Os mais saudáveis, portanto,
+                                    são separados para a etapa de transferência.</p>
+                            </div>
+                        </div>
+
+                        <div class="collapsible-section">
+                            <input type="checkbox" id="FIV-implantacao-toggle" class="collapsible-toggle" hidden>
+                            <label for="FIV-implantacao-toggle" class="collapsible-header">
+                                <h3>Implantação dos embriões</h3>
+                            </label>
+                            <div class="collapsible-content">
+                                <p>Nesta etapa de transferência embrionária, os embriões selecionados são transferidos
+                                    para o útero da mulher através de uma cânula, pelo canal vaginal.</p>
+                                <p>Este procedimento é rápido e indolor, não necessitando de anestesia, demorando apenas
+                                    cerca de cinco minutos.</p>
+                                <p>Cerca de duas semanas após a transferência embrionária, é realizado um teste
+                                    sanguíneo que determinará a ocorrência ou não de gravidez.</p>
+                                <p>Se for o desejo do casal, os embriões considerados viáveis e que não foram
+                                    transferidos para o útero da mulher podem ser congelados por meio de um processo de
+                                    criopreservação. Dessa forma, é possível preservá-los para serem usados em uma nova
+                                    tentativa de gestação.</p>
+                            </div>
+
+                            <div class="collapsible-section">
+                                <input type="checkbox" id="FIV-referências-toggle" class="collapsible-toggle" hidden>
+                                <label for="FIV-referências-toggle" class="collapsible-header">
+                                    <h3>Referências Bibliográficas</h3>
+                                </label>
+                                <div class="collapsible-content">
+                                    <ol>
+                                        <li>Procriação Medicamente Assistida - Clínicas IVI (s/d). Fecundação in vitro
+                                            (FIV). Retirado de <a
+                                                href="https://ivi.pt/tratamentos-procriacao-assistida/fertilizacao-in-vitro/">https://ivi.pt/tratamentos-procriacao-assistida/fertilizacao-in-vitro/</a>
+                                            a 24 de novembro de 2025</li>
+                                        <li>MaterPrime. (s.d.). Fertilização in vitro. MaterPrime. Obtido em 6 de
+                                            outubro de 2025 em <a
+                                                href="https://materprime.com.br/tratamentos/fertilizacao-in-vitro/">https://materprime.com.br/tratamentos/fertilizacao-in-vitro/</a>
+                                        </li>
+                                        <li>CEMEARE. (2021, 27 de julho). Processo de fertilização in vitro. CEMEARE.
+                                            Obtido em 6 de outubro de 2025 em <a
+                                                href="https://cemeare.pt/processo-de-fertilizacao-in-vitro/"></a>https://cemeare.pt/processo-de-fertilizacao-in-vitro/</a>
+                                        </li>
+                                        <li>Neovita. (s.d.). Fases da FIV: entenda a importância de cada etapa. Neovita.
+                                            Obtido em 6 de outubro de 2025 em <a href="https://www.neovita.med.br/fases-da-fiv-entenda-a-importancia-de-cada-etapa-242L"></a>
+                                            https://www.neovita.med.br/fases-da-fiv-entenda-a-importancia-de-cada-etapa-242L
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                </section>
+                <section class="diagnosis-column">
+                    <h2>Inseminação Intrauterina (IIU)</h2>
+
+                    <div class="collapsible-section">
+                        <input type="checkbox" id="IIU-o que é-toggle" class="collapsible-toggle" hidden>
+                        <label for="IIU-o que é-toggle" class="collapsible-header">
+                            <h3>O que é?</h3>
+                        </label>
+                        <div class="collapsible-content">
+                            <p>A IIU é um método de procriação medicamente assistida (PMA) que tem como objetivo final
+                                uma gravidez. Geralmente é uma técnica utilizada em casos de disfunção erétil ou em
+                                casos de espermatozoides com mobilidade reduzida.</p>
+                        </div>
+
+                        <div class="collapsible-section">
+                            <input type="checkbox" id="IIU-casos-toggle" class="collapsible-toggle" hidden>
+                            <label for="IIU-casos-toggle" class="collapsible-header">
+                                <h3>Em que casos está indicada a realização desta técnica?</h3>
+                            </label>
+                            <div class="collapsible-content">
+                                <p>A utilização da IIU é indicada especialmente para mulheres até aos 35 anos de idade,
+                                    em casos de:</p>
+                                <ul>
+                                    <li>Infertilidade masculina ligeira (baixa quantidade ou baixa motilidade de
+                                        espermatozoides, por exemplo)</li>
+                                    <li>Infertilidade inexplicada</li>
+                                    <li>Disfunção ovulatória</li>
+                                    <li>Fator cervical</li>
+                                    <li>Endometriose mínima</li>
+                                    <li>Anomalias do colo do útero</li>
+                                    <li>Dificuldades na relação sexual</li>
+                                    <li>Doenças sexualmente transmissíveis</li>
+                                    <li>Irregularidades na ovulação</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="collapsible-section">
+                            <input type="checkbox" id="IIU-como funciona-toggle" class="collapsible-toggle" hidden>
+                            <label for="IIU-como funciona-toggle" class="collapsible-header">
+                                <h3>Quais são as etapas deste processo?</h3>
+                            </label>
+                            <div class="collapsible-content">
+                                <ol>
+                                    <li>O esperma é recolhido, analisado quanto a patologias e doenças e preparado,
+                                        sendo filtrado para remover o muco remanescente, bem como os espermatozoides sem
+                                        mobilidade. O resultado é uma solução concentrada de espermatozoides ativos.
+                                    </li>
+                                    <li>É induzida a ovulação, através de uma injeção dada quando os óvulos estão
+                                        maduros, levando à sua libertação.</li>
+                                    <li>É preparada uma seringa que contém o esperma e esta é fixada a uma catéter,
+                                        sendo este último introduzido na vagina até ao útero, onde são colocados os
+                                        espermatozoides.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="collapsible-section">
+                            <input type="checkbox" id="IIU-eficácia-toggle" class="collapsible-toggle" hidden>
+                            <label for="IIU-eficácia-toggle" class="collapsible-header">
+                                <h3>Eficácia</h3>
+                            </label>
+                            <div class="collapsible-content">
+                                <p>Sendo um método pouco invasivo e pouco dispendioso, a inseminação intrauterina não é
+                                    um método muito eficaz. A tabela seguinte relaciona a eficácia desta técnica de PMA
+                                    para cada idade [3]:</p>
+                                <table>
+                                    <tr>
+                                        <th>Idade</th>
+                                        <th>Eficácia</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Menos de 25 anos</td>
+                                        <td>25%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>25 a 29 anos</td>
+                                        <td>14,62%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>30 a 34 anos</td>
+                                        <td>Menos de 12,08%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>35 a 39 anos</td>
+                                        <td>Menos de 8,66%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>40 a 41 anos</td>
+                                        <td>Menos de 9,57%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>42 a 43 anos</td>
+                                        <td>3,70%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mais de 43 anos</td>
+                                        <td>0%</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="collapsible-section">
+                                <input type="checkbox" id="IIU-referências-toggle" class="collapsible-toggle" hidden>
+                                <label for="IIU-referências-toggle" class="collapsible-header">
+                                    <h3>Referências Bibliográficas</h3>
+                                </label>
+                                <div class="collapsible-content">
+                                    <ol>
+                                        <li>Reis, J.; Guimarães, A.; Bela Saraiva, A.; Novais, H. (2024). Odisseia 12.
+                                            Porto Editora.</li>
+                                        <li>Fertilidade.info. (s.d.). Inseminação intrauterina (IIU). Obtido a 25 de
+                                            setembro de 2025 em <a
+                                                href="https://www.fertility.com/pt-pt/tratamento-fertilidade/opcoes-tratamento/inseminacao-intra-uterina.html">https://www.fertility.com/pt-pt/tratamento-fertilidade/opcoes-tratamento/inseminacao-intra-uterina.html</a>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                </section>
+
+                <section class="diagnosis-column">
+                    <h2>Injeção intracitoplasmática de espermatozoide (ICSI)</h2>
+
+                    <div class="collapsible-section">
+                        <input type="checkbox" id="ICSI-o que é-toggle" class="collapsible-toggle" hidden>
+                        <label for="ICSI-o que é-toggle" class="collapsible-header">
+                            <h3>O que é?</h3>
+                        </label>
+                        <div class="collapsible-content">
+                            <p>A ICSI é um procedimento no qual um único espermatozoide, previamente selecionado, é
+                                injetado diretamente no óvulo. Dependendo do número de espermatozoides obtidos, a ICSI
+                                permite que o embriologista fertilize vários óvulos. Isto aumenta as hipóteses de
+                                sucesso em casos de infertilidade masculina ou baixa qualidade dos óvulos.
+                                <br>Os passos envolvidos na ICSI e na fertilização in vitro (FIV) são semelhantes, com a
+                                exceção de que é necessário um grande número de espermatozoides para a FIV. Isto faz com
+                                que a ICSI seja um método mais adequado, por exemplo, para casos de infertilidade
+                                masculina, uma vez que só é necessário um espermatozoide.
+                            </p>
+                            <p>A ICSI pode ser realizada com gâmetas de ambos os elementos do casal (ICSI intraconjugal)
+                                caso se trate de um casal heterossexual. Ou pode-se recorrer a gâmetas doados, tanto a
+                                ovócitos como a espermatozoides.</p>
+                        </div>
+
+                        <div class="collapsible-section">
+                            <input type="checkbox" id="ICSI-casos indicados-toggle" class="collapsible-toggle" hidden>
+                            <label for="ICSI-casos indicados-toggle" class="collapsible-header">
+                                <h3>Em que casos está indicada a realização desta técnica?</h3>
+                            </label>
+                            <div class="collapsible-content">
+                                <p>A realização da ICSI está indicada em casos de infertilidade de fator masculino
+                                    moderado a grave e em situações de falha de fertilização em ciclos anteriores de FIV
+                                    convencional e/ou Inseminação Intrauterina, e em casos em que será realizado
+                                    Diagnóstico Genético Pré-Implantação (DGPI) nos embriões obtidos.</p>
+                            </div>
+                        </div>
+
+                        <div class="collapsible-section">
+                            <input type="checkbox" id="ICSI-etapas-toggle" class="collapsible-toggle" hidden>
+                            <label for="ICSI-etapas-toggle" class="collapsible-header">
+                                <h3>Quais são as etapas deste processo?</h3>
+                            </label>
+                            <div class="collapsible-content">
+                                <ol>
+                                    <li>Estimulação Ovárica</li>
+                                    <p>A mulher inicia medicação hormonal para desenvolver vários folículos ao mesmo
+                                        tempo. O crescimento é acompanhado por ecografias. Quando os folículos atingem o
+                                        tamanho ideal, é administrada uma hormona (hCG) que finaliza a maturação dos
+                                        ovócitos.
+                                    </p>
+                                    <li>Punção Folicular</li>
+                                    <p>Cerca de 36 horas após o hCG, os ovócitos são recolhidos através de um pequeno
+                                        procedimento guiado por ecografia e feito sob sedação. A partir deste momento,
+                                        inicia-se medicação para preparar o útero para receber os embriões.
+                                    </p>
+                                    <li>Processamento dos Gâmetas</li>
+                                    <p>No laboratório, os ovócitos são limpos (desnudação) para avaliar a maturidade.
+                                        No mesmo dia, é recolhida a amostra de esperma, que é tratada para selecionar os
+                                        melhores espermatozoides.</p>
+                                    <li>ICSI (Microinjeção)</li>
+                                    <p> Com microscópios e microinjetores especializados, um único espermatozoide é
+                                        injetado diretamente no citoplasma de cada ovócito.
+                                    </p>
+                                    <li>Fertilização e Cultura Embrionária</li>
+                                    <p>Após 16–18 horas verifica-se se houve fertilização. Os embriões são depois
+                                        cultivados em incubadoras durante 3 a 5 dias, sendo observados diariamente.</p>
+                                    <li>Transferência Embrionária ou Criopreservação</li>
+                                    <p>O embrião de melhor qualidade é transferido para o útero através de um cateter.
+                                        Embriões excedentes podem ser congelados para uso futuro.</p>
+                                    <li>Análise bHCG</li>
+                                    <p>Cerca de 12 dias após a transferência, é feito um exame ao sangue para confirmar
+                                        a gravidez.
+                                    </p>
+                                </ol>
+                            </div>
+
+                            <div class="collapsible-section">
+                                <input type="checkbox" id="ICSI-diferenças" class="collapsible-toggle" hidden>
+                                <label for="ICSI-diferenças" class="collapsible-header">
+                                    <h3>Eficácia>
+                                </label>
+                                <div class="collapsible-content">
+                                    <p>As taxas de sucesso da técnica ICSI, a nível nacional e internacional, situam-se
+                                        nos 30%.</p>
+                                </div>
+                            </div>
+                            <div class="collapsible-section">
+                                <input type="checkbox" id="ICSI-referências-toggle" class="collapsible-toggle" hidden>
+                                <label for="ICSI-referências-toggle" class="collapsible-header">
+                                    <h3>Referências Bibliográficas</h3>
+                                </label>
+                                <div class="collapsible-content">
+                                    <ol>
+                                        <li>IVI. (s.d.). Injeção Intracitoplasmática (ICSI). IVI. Consultado em 30 de
+                                            setembro de 2025, em <a
+                                                href="https://ivi.pt/tratamentos-procriacao-assistida/icsi/">https://ivi.pt/tratamentos-procriacao-assistida/icsi/</a>
+                                        </li>
+                                        <li>CETI. (s.d.). Microinjeção Intracitoplasmática de Espermatozoide (ICSI).
+                                            CETI. Consultado em 30 de setembro de 2025, em <a
+                                                href="https://ceti.pt/microinjecao-intracitoplasmatica-de-espermatozoide-icsi/">https://ceti.pt/microinjecao-intracitoplasmatica-de-espermatozoide-icsi/</a>
+                                        </li>
+                                        <li>Fertility. (s.d.). Injeção Intracitoplasmática de Espermatozoides.
+                                            Fertility. Consultado em 30 de setembro de 2025, em <a
+                                                href="https://www.fertility.com/pt-pt/fertilizacao-in-vitro/fase-2-no-laboratorio/injecao-intracitoplasmatica-espermatozoides.html">https://www.fertility.com/pt-pt/fertilizacao-in-vitro/fase-2-no-laboratorio/injecao-intracitoplasmatica-espermatozoides.html</a>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                </section>
+                <a href="tratamento-gravidez.html" class="small-button">
+                    Explore a Gravidez após a Infertilidade
+                </a>
+            </div>
+    </main>
+</body>
+
+</html>
