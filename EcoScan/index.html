@@ -1,56 +1,109 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EcoScan - Caça ao Greenwashing</title>
     <style>
         :root { --primary: #2e7d32; --bg: #f4f7f6; --text: #333; --accent: #f57c00; --danger: #d32f2f; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; height: 100vh; margin: 0; overflow: hidden; color: var(--text); }
         
-        #game-area { flex: 2; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; position: relative; }
-        #sidebar { flex: 1; background: #fff; padding: 20px; border-left: 2px solid #ddd; overflow-y: auto; display: flex; flex-direction: column; }
+        * { box-sizing: border-box; }
+
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: var(--bg); 
+            display: flex; 
+            flex-direction: column;
+            height: 100vh; 
+            margin: 0; 
+            overflow: hidden; 
+            color: var(--text); 
+            align-items: center;
+        }
+        
+        #game-area { 
+            width: 100%;
+            max-width: 500px;
+            padding: 12px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: space-between; 
+            height: 100%;
+            position: relative;
+        }
         
         /* Telas de Transição (Intro e Fim) */
-        #intro-screen, #end-screen { position: absolute; top:0; left:0; width:100%; height:100%; background: white; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; box-sizing: border-box; text-align: center; }
+        #intro-screen, #end-screen { position: absolute; top:0; left:0; width:100%; height:100%; background: white; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
         #end-screen { display: none; }
-        .intro-card, .end-card { max-width: 600px; background: #e8f5e9; padding: 30px; border-radius: 15px; border-top: 8px solid var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .intro-card, .end-card { width: 90%; max-width: 420px; background: #e8f5e9; padding: 25px; border-radius: 15px; border-top: 8px solid var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
 
-        .hud { width: 90%; max-width: 700px; display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); font-size: 1.1em; }
+        /* HUD Compacta */
+        .hud { width: 100%; display: flex; justify-content: space-around; align-items: center; background: white; padding: 12px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); font-size: 1em; }
         .hud strong { color: var(--primary); }
 
-        .product-container { position: relative; height: 480px; background: white; padding: 10px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; }
-        .product-image { height: 100%; width: auto; display: block; border-radius: 10px; }
+        /* Contentor Expansivo para a Imagem */
+        .product-container { 
+            position: relative; 
+            flex: 1; 
+            width: 100%; 
+            max-height: 60vh; 
+            margin: 12px 0;
+            background: white; 
+            padding: 12px; 
+            border-radius: 16px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
         
-        .magnifier-point { position: absolute; width: 38px; height: 38px; border: 3px solid #ffeb3b; border-radius: 50%; background: rgba(255, 235, 59, 0.35); cursor: pointer; animation: pulse 1.5s infinite; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 1.2em; color: #000; box-shadow: 0 0 8px rgba(0,0,0,0.3); z-index: 10; }
-        @keyframes pulse { 0% { transform: scale(1); } 70% { transform: scale(1.15); box-shadow: 0 0 0 10px rgba(255, 235, 59, 0); } 100% { transform: scale(1); } }
-        .magnifier-point.analyzed { border-color: #4caf50; background: rgba(76, 175, 80, 0.4); animation: none; color: white; cursor: default; }
+        /* Wrapper relativo para trancar a proporção da imagem */
+        .image-wrapper {
+            position: relative;
+            max-width: 100%;
+            max-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-        .analysis-card { position: absolute; bottom: 15px; background: white; padding: 15px 20px; border-radius: 12px; display: none; box-shadow: 0 5px 25px rgba(0,0,0,0.15); width: 85%; max-width: 450px; z-index: 100; border-top: 5px solid var(--accent); }
-        .btn-legit { background: #4caf50; color: white; padding: 10px 20px; border:none; border-radius:4px; margin-right:10px; cursor:pointer; font-weight: bold;}
-        .btn-gw { background: #f44336; color: white; padding: 10px 20px; border:none; border-radius:4px; cursor:pointer; font-weight: bold;}
+        .product-image { max-width: 100%; max-height: 56vh; object-fit: contain; display: block; border-radius: 8px; }
         
-        /* Painel do Slider Corrigido */
-        #verdict-area { width: 90%; max-width: 550px; background: white; padding: 15px; border-radius: 12px; margin-top: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: center; display: none; }
-        .slider-container { position: relative; margin: 25px 0 15px 0; }
-        .slider { -webkit-appearance: none; width: 100%; height: 10px; border-radius: 5px; background: linear-gradient(to right, #f44336, #ff9800, #9e9e9e, #8bc34a, #4caf50); outline: none; }
-        .slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #fff; border: 3px solid var(--primary); cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .slider-labels { display: flex; justify-content: space-between; font-size: 0.7em; font-weight: bold; color: #555; padding: 0 2px; }
-        .slider-labels span { flex: 1; text-align: center; }
-        .slider-labels span:first-child { text-align: left; }
-        .slider-labels span:last-child { text-align: right; }
-        #current-slider-val { font-weight: bold; font-size: 1.1em; color: var(--primary); margin-top: 5px; display: block; }
+        /* Camada Absoluta Trancada sobre os limites reais da Imagem */
+        #points-layer { position: absolute; top: 0; bottom: 0; left: 0; right: 0; }
 
-        .dict-item { background: #f1f8e9; padding: 10px 12px; margin-bottom: 8px; border-radius: 6px; border-left: 4px solid var(--primary); font-size: 0.9em; }
-        .btn-next { background: var(--primary); color: white; font-size: 1.1em; width: 100%; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .magnifier-point { position: absolute; width: 44px; height: 44px; border: 3px solid #ffeb3b; border-radius: 50%; background: rgba(255, 235, 59, 0.4); cursor: pointer; animation: pulse 1.5s infinite; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 1.2em; color: #000; box-shadow: 0 2px 10px rgba(0,0,0,0.25); z-index: 10; transform: translate(-50%, -50%); }
+        @keyframes pulse { 0% { transform: translate(-50%, -50%) scale(1); } 70% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 0 8px rgba(255, 235, 59, 0); } 100% { transform: translate(-50%, -50%) scale(1); } }
+        .magnifier-point.analyzed { border-color: #4caf50; background: rgba(76, 175, 80, 0.5); animation: none; color: white; cursor: default; }
 
-        /* Pop-ups do Jogo */
-        #custom-popup { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; }
-        .popup-card { background: white; padding: 25px; border-radius: 12px; max-width: 420px; width: 85%; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 6px solid var(--primary); transform: scale(0.9); transition: transform 0.2s ease; }
+        /* Zona de Ação na Base */
+        .action-zone { width: 100%; min-height: 120px; display: flex; align-items: center; justify-content: center; }
+
+        /* Caixa de Análise Dinâmica */
+        .analysis-card { width: 100%; background: white; padding: 12px 15px; border-radius: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-top: 5px solid var(--accent); display: none; }
+        .analysis-buttons { display: flex; gap: 12px; margin-top: 10px; }
+        .btn-legit { background: #4caf50; color: white; padding: 12px; border:none; border-radius:8px; cursor:pointer; font-weight: bold; flex: 1; font-size: 1em;}
+        .btn-gw { background: #f44336; color: white; padding: 12px; border:none; border-radius:8px; cursor:pointer; font-weight: bold; flex: 1; font-size: 1em;}
+        
+        /* Área de Veredito Final */
+        #verdict-area { width: 100%; background: white; padding: 12px 15px; border-radius: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: center; display: none; }
+        .slider-container { position: relative; margin: 12px 0 8px 0; }
+        .slider { -webkit-appearance: none; width: 100%; height: 8px; border-radius: 5px; background: linear-gradient(to right, #f44336, #ff9800, #9e9e9e, #8bc34a, #4caf50); outline: none; }
+        .slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 4px solid var(--primary); cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .slider-labels { display: flex; justify-content: space-between; font-size: 0.75em; font-weight: bold; color: #666; margin-top: 5px; }
+        #current-slider-val { font-weight: bold; font-size: 1.05em; color: var(--primary); display: block; margin-top: 2px; }
+
+        .btn-next { background: var(--primary); color: white; font-size: 1em; width: 100%; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 8px; }
+
+        /* Pop-ups */
+        #custom-popup { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 15px; }
+        .popup-card { background: white; padding: 20px; border-radius: 12px; max-width: 360px; width: 100%; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 6px solid var(--primary); transform: scale(0.9); transition: transform 0.2s ease; }
         .popup-card.show { transform: scale(1); }
-        .popup-icon { font-size: 3em; margin-bottom: 10px; }
+        .popup-icon { font-size: 2.8em; margin-bottom: 5px; }
         .popup-card.success { border-top-color: #4caf50; }
         .popup-card.error { border-top-color: var(--danger); }
-        .btn-popup-close { background: var(--primary); color: white; padding: 10px 25px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 15px; }
+        .btn-popup-close { background: var(--primary); color: white; padding: 12px 25px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 15px; width: 100%; font-size: 1em; }
     </style>
 </head>
 <body>
@@ -58,7 +111,7 @@
 <div id="custom-popup" onclick="closePopup()">
     <div class="popup-card" id="popup-card" onclick="event.stopPropagation()">
         <div class="popup-icon" id="popup-icon">🎯</div>
-        <h3 id="popup-title" style="margin: 5px 0 10px 0;">Mensagem</h3>
+        <h3 id="popup-title" style="margin: 5px 0 5px 0; font-size: 1.25em;">Mensagem</h3>
         <p id="popup-desc" style="margin: 0; color: #555; line-height: 1.4; font-size: 0.95em;"></p>
         <button class="btn-popup-close" id="popup-btn" onclick="closePopup()">Continuar</button>
     </div>
@@ -66,25 +119,24 @@
 
 <div id="intro-screen">
     <div class="intro-card">
-        <h1>🔍 Bem-vindo ao EcoScan 🔍</h1>
-        <p>Analisa detalhadamente as embalagens dos produtos e usa a tua perspicácia para identificar táticas de greenwashing (branqueamento ambiental).
-O greenwashing promove falsas virtudes ecológicas através de termos vagos, imagens da natureza ou destaque de obrigações legais, induzindo o consumidor em erro.</p>
+        <h1 style="font-size: 1.5em; margin-top: 0; color: var(--primary);">🔍 EcoScan: Caça ao Greenwashing</h1>
+        <p style="font-size: 0.95em; line-height: 1.4; color: #444; margin-bottom: 20px;">Analisa detalhadamente as embalagens dos produtos e usa a tua perspicácia para identificar táticas de greenwashing (branqueamento ambiental). O greenwashing promove falsas virtudes ecológicas através de termos vagos, imagens da natureza ou destaque de obrigações legais, induzindo o consumidor em erro.</p>
         <button class="btn-next" style="width: auto; padding: 12px 40px;" onclick="startGame()">Começar Investigação ➔</button>
     </div>
 </div>
 
 <div id="end-screen">
     <div class="end-card">
-        <h1>🏁 Investigação Concluída!</h1>
-        <div style="background: white; padding: 15px; border-radius: 10px; margin: 20px 0; border: 1px solid #c8e6c9;">
-            <p style="margin: 0; font-size: 1.2em; color: #555;">Pontuação Total Conquistada:</p>
-            <h2 style="margin: 5px 0; font-size: 2.5em; color: var(--primary);"><span id="final-score">0</span> Pontos</h2>
+        <h1 style="font-size: 1.6em; margin: 0;">🏁 Investigação Concluída!</h1>
+        <div style="background: white; padding: 15px; border-radius: 10px; margin: 15px 0; border: 1px solid #c8e6c9;">
+            <p style="margin: 0; font-size: 1em; color: #555;">Pontuação Total Conquistada:</p>
+            <h2 style="margin: 5px 0; font-size: 2.3em; color: var(--primary);"><span id="final-score">0</span> Pontos</h2>
         </div>
-        <h3 style="color: var(--accent); margin-bottom: 5px;">O que aprendemos sobre o Greenwashing?</h3>
-        <p style="margin-top: 0; color: #444; text-align: justify; font-size: 0.95em; line-height: 1.5;">
-            O <strong>Greenwashing</strong>  consiste em induzir o consumidor em erro. Este promove falsas virtudes ecológicas através de termos vagos, imagens de natureza ou realce de obrigações legais. Para combater isto, é importante estar atento aos rótulos, aos ingredientes e procurar selos oficiais auditados independentemente.
+        <h3 style="color: var(--accent); margin: 0 0 5px 0; font-size: 1.1em;">O que aprendemos?</h3>
+        <p style="margin: 0; color: #444; text-align: justify; font-size: 0.85em; line-height: 1.4;">
+            O <strong>Greenwashing</strong> consiste em induzir o consumidor em erro. Este promove falsas virtudes ecológicas através de termos vagos, imagens de natureza ou realce de obrigações legais. Para combater isto, é importante estar atento aos rótulos, aos ingredientes e procurar selos oficiais auditados independentemente.
         </p>
-        <button class="btn-next" style="width: auto; padding: 12px 40px;" onclick="location.reload()">Jogar Novamente ⟳</button>
+        <button class="btn-next" style="width: auto; padding: 12px 45px; margin-top: 15px;" onclick="location.reload()">Jogar Novamente ⟳</button>
     </div>
 </div>
 
@@ -96,40 +148,33 @@ O greenwashing promove falsas virtudes ecológicas através de termos vagos, ima
     </div>
 
     <div class="product-container" id="prod-container">
-        <img src="A1.png" id="main-img" class="product-image">
-        <div id="points-layer"></div>
-        
+        <div class="image-wrapper">
+            <img src="A1.png" id="main-img" class="product-image">
+            <div id="points-layer"></div>
+        </div>
+    </div>
+    
+    <div class="action-zone">
         <div id="analysis-box" class="analysis-card">
-            <p id="analysis-text" style="margin-top:0; font-size: 1em; line-height: 1.4;"></p>
-            <div style="display:flex; justify-content: center;">
+            <p id="analysis-text" style="text-align: center; font-weight: 500; margin: 0 0 10px 0; line-height: 1.4; font-size: 0.95em;"></p>
+            <div class="analysis-buttons">
                 <button class="btn-legit" onclick="handlePointGuess(false)">É Legítimo</button>
                 <button class="btn-gw" onclick="handlePointGuess(true)">É Greenwashing</button>
             </div>
         </div>
-    </div>
 
-    <div id="verdict-area">
-        <h3 style="margin: 0; font-size: 1.1em;">Avaliação Geral da Embalagem</h3>
-        <p style="margin: 2px 0; font-size: 0.9em; color: #666;">Onde posicionas este produto na escala?</p>
-        <div class="slider-container">
-            <input type="range" min="1" max="5" value="3" class="slider" id="verdict-slider" oninput="updateSliderLabel()">
-            <div class="slider-labels">
-                <span>Muito Greenwashing</span>
-                <span>Greenwashing</span>
-                <span>Neutro</span>
-                <span>Honesto</span>
-                <span>Muito Honesto</span>
+        <div id="verdict-area">
+            <h3 style="margin: 0; font-size: 0.95em;">Avaliação Geral da Embalagem</h3>
+            <div class="slider-container">
+                <input type="range" min="1" max="5" value="3" class="slider" id="verdict-slider" oninput="updateSliderLabel()">
+                <div class="slider-labels">
+                    <span>← Mais Greenwashing</span>
+                    <span>Mais Honesto →</span>
+                </div>
             </div>
+            <span id="current-slider-val">Neutro</span>
+            <button class="btn-next" onclick="submitFinalVerdict()">Submeter Veredito Final ➔</button>
         </div>
-        <span id="current-slider-val">Neutro</span>
-        <button class="btn-next" onclick="submitFinalVerdict()">Submeter Veredito Final ➔</button>
-    </div>
-</div>
-
-<div id="sidebar">
-    <h2 style="color: var(--primary); margin-top: 0; font-size: 1.4em; border-bottom: 2px solid #eee; padding-bottom: 10px;">📓 Caderneta EcoScan</h2>
-    <div id="dictionary-container" style="flex: 1; overflow-y: auto;">
-        <p id="empty-dict" style="color: #999; font-style: italic; font-size: 0.9em;">Nenhuma evidência registada até ao momento.</p>
     </div>
 </div>
 
@@ -140,8 +185,8 @@ O greenwashing promove falsas virtudes ecológicas através de termos vagos, ima
             name: "Iogurte Líquido 'Puro Campo'",
             correctScale: 3, 
             points: [
-                { top: '53%', left: '46%', text: "Selo Oficial 'Biológico UE' na base central do rótulo.", isGW: false, title: "Certificação Legal (+2)", desc: "Selo regulado e auditado por terceiros." },
-                { top: '74%', left: '45%', text: "Ilustrações de vacas felizes num prado verdejante sem selos de bem-estar animal.", isGW: true, title: "Imagens de Natureza Irrelevantes (-2)", desc: "Apelo visual rústico em produtos industriais." }
+                { top: '53%', left: '46%', text: "Selo Oficial 'Biológico UE' na base central do rótulo.", isGW: false },
+                { top: '74%', left: '45%', text: "Ilustrações de vacas felizes num prado verdejante sem selos de bem-estar animal.", isGW: true }
             ]
         },
         {
@@ -149,8 +194,8 @@ O greenwashing promove falsas virtudes ecológicas através de termos vagos, ima
             name: "Bolachas 'Eco-Snack'",
             correctScale: 1, 
             points: [
-                { top: '48%', left: '50%', text: "Termo 'NATURAL' gigante no topo sem qualquer asterisco explicativo.", isGW: true, title: "Vagueza Semântica (-2)", desc: "Alegações vagas sem fundamentação científica." },
-                { top: '71%', left: '42%', text: "Texto 'Amiga do Ambiente' mas a embalagem é multimaterial e não reciclável.", isGW: true, title: "Embalagem Redundante / Contradição (-1)", desc: "Estrutura do material anula a promessa ecológica." }
+                { top: '48%', left: '50%', text: "Termo 'NATURAL' gigante no topo sem qualquer asterisco explicativo.", isGW: true },
+                { top: '80%', left: '35%', text: "Texto 'Amiga do Ambiente' mas a embalagem é multimaterial e não reciclável.", isGW: true }
             ]
         },
         {
@@ -158,8 +203,8 @@ O greenwashing promove falsas virtudes ecológicas através de termos vagos, ima
             name: "Sumo de Laranja 'Origens'",
             correctScale: 5, 
             points: [
-                { top: '81%', left: '21%', text: "Selo oficial 'Biológico UE' no canto inferior esquerdo.", isGW: false, title: "Certificação Legal (+2)", desc: "Garante conformidade com normas agrícolas da UE." },
-                { top: '83%', left: '76%', text: "Informação precisa: '50% menos plástico que a embalagem anterior'.", isGW: false, title: "Dados Quantificáveis (+1)", desc: "Dados numéricos e percentagens exatas transparentes." }
+                { top: '81%', left: '21%', text: "Selo oficial 'Biológico UE' no canto inferior esquerdo.", isGW: false },
+                { top: '83%', left: '76%', text: "Informação precisa: '50% menos plástico que a embalagem anterior'.", isGW: false }
             ]
         },
         {
@@ -167,7 +212,7 @@ O greenwashing promove falsas virtudes ecológicas através de termos vagos, ima
             name: "Hambúrguer de Novilho 'Premium'",
             correctScale: 2, 
             points: [
-                { top: '66%', left: '76%', text: "Destaque dourado '100% Sem Hormonas Adicionadas!' (O uso de hormonas na carne já é proibido por lei na UE).", isGW: true, title: "Destaque de Atributo Obrigatório (-1)", desc: "Publicitar o que é obrigatório por lei para simular uma falsa vantagem ecológica." }
+                { top: '70%', left: '77%', text: "Destaque dourado '100% Sem Hormonas Adicionadas!' (O uso de hormonas na carne já é proibido por lei na UE).", isGW: true }
             ]
         },
         {
@@ -175,8 +220,8 @@ O greenwashing promove falsas virtudes ecológicas através de termos vagos, ima
             name: "Detergente de Roupa 'Verde Puro'",
             correctScale: 2, 
             points: [
-                { top: '80%', left: '46%', text: "Selo oficial Bio e Ecocert válidos na base do rótulo.", isGW: false, title: "Certificação Legal (+2)", desc: "Selos legítimos de conformidade técnica externa." },
-                { top: '72%', left: '50%', text: "Alegação 'Fórmula 100% Biodegradável!' sem dados ou asteriscos de suporte.", isGW: true, title: "Biodegradabilidade Vaga (-2)", desc: "Omitir se a degradação necessita de triagem ou parâmetros industriais." }
+                { top: '80%', left: '46%', text: "Selo oficial Bio e Ecocert válidos na base do rótulo.", isGW: false },
+                { top: '59%', left: '50%', text: "Alegação 'Fórmula 100% Biodegradável!' sem dados ou asteriscos de suporte.", isGW: true }
             ]
         },
         {
@@ -184,7 +229,7 @@ O greenwashing promove falsas virtudes ecológicas através de termos vagos, ima
             name: "Lava-Tudo 'Eco-Clear'",
             correctScale: 4, 
             points: [
-                { top: '46%', left: '46%', text: "Selo oficial 'Ecolabel' da União Europeia emoldurado a meio.", isGW: false, title: "Selo de Terceiros Independente (+1)", desc: "Certificação europeia sobre o ciclo de vida ecológico." }
+                { top: '46%', left: '46%', text: "Selo oficial 'Ecolabel' da União Europeia emoldurado a meio.", isGW: false }
             ]
         },
         {
@@ -192,7 +237,7 @@ O greenwashing promove falsas virtudes ecológicas através de termos vagos, ima
             name: "Detergente para a Loiça 'Ultra'",
             correctScale: 1, 
             points: [
-                { top: '74%', left: '50%', text: "Destaque 'Livre de Fosfatos!' num produto onde os fosfatos já são banidos por lei na UE.", isGW: true, title: "Afirmação Enganosa (-3)", desc: "Fazer publicidade com a ausência de um químico proibido por lei." }
+                { top: '74%', left: '50%', text: "Destaque 'Livre de Fosfatos!' num produto onde os fosfatos já são banidos por lei na UE.", isGW: true }
             ]
         },
         {
@@ -200,7 +245,7 @@ O greenwashing promove falsas virtudes ecológicas através de termos vagos, ima
             name: "Spray Limpa-Vidros 'Bio-Glass'",
             correctScale: 4, 
             points: [
-                { top: '56%', left: '62%', text: "Presença do selo de certificação ecológica independente 'Ecocert'.", isGW: false, title: "Selo Independente (+1)", desc: "Auditoria fidedigna por entidade externa reconhecida." }
+                { top: '56%', left: '62%', text: "Presença do selo de certification ecológica independente 'Ecocert'.", isGW: false }
             ]
         }
     ];
@@ -208,7 +253,6 @@ O greenwashing promove falsas virtudes ecológicas através de termos vagos, ima
     const sliderTexts = ["Muito Greenwashing", "Greenwashing", "Neutro", "Honesto", "Muito Honesto"];
     let score = 0, streak = 0, currentLvl = 0;
     let currentPoint = null, pointsInvestigated = 0;
-    let unlockedCards = new Set();
     let onPopupConfirm = null;
 
     function openPopup(icon, title, desc, type, callback = null) {
@@ -271,6 +315,7 @@ O greenwashing promove falsas virtudes ecológicas através de termos vagos, ima
         currentPoint.element = element;
         document.getElementById('analysis-text').innerText = currentPoint.text;
         document.getElementById('analysis-box').style.display = 'block';
+        document.getElementById('verdict-area').style.display = 'none';
     }
 
     function handlePointGuess(playerSaysGW) {
@@ -281,7 +326,6 @@ O greenwashing promove falsas virtudes ecológicas através de termos vagos, ima
             score += (50 + (streak * 10));
             streak++;
             openPopup("🎯", "Inspeção Correta!", "Identificaste o elemento com precisão técnica.", "success");
-            if(currentPoint.isGW) unlockNotebook(currentPoint);
         } else {
             score = Math.max(0, score - 50);
             streak = 0;
@@ -329,24 +373,10 @@ O greenwashing promove falsas virtudes ecológicas através de termos vagos, ima
             if(currentLvl < levels.length) {
                 loadLevel();
             } else {
-                // Ativa o novo ecrã de fim de jogo em vez de usar pop-ups nativos
                 document.getElementById('final-score').innerText = score;
                 document.getElementById('end-screen').style.display = "flex";
             }
         });
-    }
-
-    function unlockNotebook(p) {
-        if(unlockedCards.has(p.title)) return;
-        unlockedCards.add(p.title);
-        const empty = document.getElementById('empty-dict');
-        if(empty) empty.remove();
-
-        const container = document.getElementById('dictionary-container');
-        const card = document.createElement('div');
-        card.className = 'dict-item';
-        card.innerHTML = `<strong>⚠️ ${p.title}</strong><br><small>${p.desc}</small>`;
-        container.prepend(card);
     }
 
     function updateHUD() {
